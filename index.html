@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MONIA.EXE — Birthday Build 23</title>
+<style>html,body{margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}body{background:#fff4f7;color:#241d24;overflow-x:hidden}button{font:inherit;cursor:pointer}.intro{position:fixed;inset:0;display:grid;place-items:center;background:#111;color:white;z-index:50}.intro-box{text-align:center;padding:40px}.open{padding:14px 22px;border:0;border-radius:999px;background:#fff;color:#111;font-weight:800}.wrap{max-width:1000px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;position:sticky;top:0;z-index:5;padding:10px 0;backdrop-filter:blur(8px)}.pill{border:1px solid #ddd;border-radius:999px;padding:9px 13px;background:#fff8}.hero{min-height:75vh;display:grid;place-items:center;text-align:center}.hero h1{font-size:clamp(4rem,12vw,9rem);line-height:.85;margin:0}.hero p{font-size:1.05rem}.card{background:#fff;border:1px solid #e7dde2;border-radius:28px;padding:24px;margin:18px 0;box-shadow:0 12px 40px #0000000d}.photos{display:flex;justify-content:center;align-items:center;min-height:420px;position:relative}.photo{width:min(320px,75vw);border-radius:22px;box-shadow:0 20px 60px #0003;position:absolute;transition:.35s}.photo:first-child{transform:rotate(-5deg) translate(-28px,0)}.photo:last-child{transform:rotate(6deg) translate(28px,30px)}.photo:hover{transform:rotate(0) scale(1.03)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.quiz button,.mood button{padding:12px;border-radius:14px;border:1px solid #ddd;background:#fff;margin:5px}.hidden{display:none}.disco{background:#0b0610;color:#fff}.disco .card{background:#171021;border-color:#372447}.disco .pill{background:#1a1024;border-color:#4b2d61;color:#fff}.disco .hero h1{text-shadow:0 0 24px #f0f}.disco .photo{box-shadow:0 0 40px #f0f6}.spark{position:fixed;pointer-events:none;animation:pop .6s forwards}@keyframes pop{from{transform:scale(.4);opacity:1}to{transform:scale(2);opacity:0}}.progress{position:fixed;top:0;left:0;height:4px;background:#ff4f87;width:0;z-index:20}.muted{opacity:.7}.gift{font-size:3rem;text-align:center}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="intro" id="intro"><div class="intro-box"><div class="muted">MONIA.EXE · BIRTHDAY BUILD 23</div><h2>there is a thing</h2><button class="open" id="openBtn">open the thing</button></div></div>
+<div class="wrap">
+<div class="top"><div class="pill">12 SEP · 23</div><div><button class="pill" id="themeBtn">switch theme</button> <button class="pill" id="musicBtn">♫</button></div></div>
+<section class="hero"><div><div class="muted">EGYPT → POLAND</div><h1>MONIA</h1><p>birthday build: <b>23</b> · status: somehow still functioning</p></div></section>
+<section class="card"><h2>Two-week friendship test</h2><div class="quiz" id="quiz"></div><div id="quizResult" class="muted"></div></section>
+<section class="card"><h2>pick a birthday mood</h2><div class="mood"><button data-m="travel">✈️ travel</button><button data-m="swim">🏊 swim</button><button data-m="valo">🎮 valorant</button><button data-m="whiskey">🥃 whiskey</button></div><p id="moodText" class="muted">choose wisely. there are consequences.</p></section>
+<section class="card"><h2>the photo situation</h2><p class="muted">drag/click a photo. yes, this is interactive for absolutely no reason.</p><div class="photos" id="photos"></div></section>
+<section class="card"><h2>classified message</h2><p>press and hold the button for 1.2 seconds</p><button class="pill" id="secretBtn">hold me</button><p id="secret" class="hidden">Honestly, two weeks is not a lot of time — but you're genuinely fun to have around. Hope 23 treats you ridiculously well.</p></section>
+<section class="card"><h2>gift.exe</h2><p class="muted">tap the gift three times</p><div class="gift" id="gift">🎁</div><p id="giftText" class="hidden">UNLOCKED: one future real-life birthday gift when you're in Egypt.</p></section>
+</div>
+<script>
+const A='monia_01.jpg',B='monia_02.jpg';
+let disco=false, audio=new Audio('aint_in_la.mp3'), phonk=new Audio('phonk_loop.wav'); audio.loop=phonk.loop=true;
+const intro=document.getElementById('intro');
+document.getElementById('openBtn').onclick=()=>{intro.style.display='none';audio.play().catch(()=>{})};
+document.getElementById('musicBtn').onclick=()=>{[audio,phonk].forEach(x=>x.paused?x.play().catch(()=>{}):x.pause())};
+document.getElementById('themeBtn').onclick=()=>{disco=!disco;document.body.classList.toggle('disco',disco);let t=disco?phonk:audio;audio.pause();phonk.pause();t.currentTime=0;t.play().catch(()=>{})};
+const qs=[['Who is Divine Cherry#angel?',['you','a toaster','your dentist']],['Best birthday plan?',['travel + chaos','tax forms','early bedtime']],['Most suspicious hobby?',['all of them','none','being normal']]];let score=0,i=0;function renderQuiz(){if(i>=qs.length){document.getElementById('quiz').innerHTML='';document.getElementById('quizResult').textContent='score: '+score+'/3 — '+(score===3?'okay you actually know her.':'acceptable. the friendship still has bugs.');return}let [q,opts]=qs[i];document.getElementById('quiz').innerHTML='<h3>'+q+'</h3>'+opts.map((o,j)=>`<button data-a="${j}">${o}</button>`).join('');document.querySelectorAll('#quiz button').forEach(b=>b.onclick=()=>{if(+b.dataset.a===0)score++;i++;renderQuiz()})}renderQuiz();
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{let m=b.dataset.m;let t={travel:'passport energy detected. go somewhere and make questionable decisions.',swim:'pool mode: activate. absolutely no dry responsible behavior.',valo:'may your aim improve exactly 0.7% today.',whiskey:'23 deserves a proper toast. eventually.'}[m];document.getElementById('moodText').textContent=t});
+const photos=document.getElementById('photos');[A,B].forEach((s,n)=>{let im=document.createElement('img');im.src=s;im.className='photo';im.draggable=false;im.onclick=()=>{im.style.zIndex=20+n;im.style.transform='rotate(0deg) scale(1.04)';setTimeout(()=>im.style.transform='',400)};photos.appendChild(im)});
+let timer;const sb=document.getElementById('secretBtn');sb.onpointerdown=()=>{timer=setTimeout(()=>document.getElementById('secret').classList.remove('hidden'),1200)};['pointerup','pointerleave','pointercancel'].forEach(e=>sb.addEventListener(e,()=>clearTimeout(timer)));
+let clicks=0;document.getElementById('gift').onclick=()=>{clicks++;if(clicks>=3){document.getElementById('giftText').classList.remove('hidden');for(let j=0;j<30;j++){let s=document.createElement('div');s.textContent='✨';s.className='spark';s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';document.body.appendChild(s);setTimeout(()=>s.remove(),700)}}};
+document.addEventListener('click',e=>{if(e.target.tagName==='BUTTON'||e.target.id==='gift')return;let s=document.createElement('span');s.textContent='✦';s.className='spark';s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';document.body.appendChild(s);setTimeout(()=>s.remove(),600)});
+addEventListener('scroll',()=>{let h=document.documentElement.scrollHeight-innerHeight;document.getElementById('progress').style.width=(scrollY/h*100)+'%'})
+</script></body></html>
