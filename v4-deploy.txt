@@ -1,0 +1,2 @@
+MONIA V4 — force Pages redeploy
+The deployed index.html matches the V4 build exactly.
